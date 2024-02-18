@@ -8,7 +8,10 @@ import os
 app = Flask(__name__)
 
 app.config["SECRET_KEY"] = "41fd52bbf101bad477330e5b09a988ef"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///comunidade.db"
+if os.getenv("DATABASE_URL"):
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///comunidade.db"
 
 database = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
