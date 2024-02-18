@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container justify-content-center d-flex mt-2">
+  <h2 class="text-secondary align-items-center"> A comunidade perfeita para você! </h2>
+</div>
+<hr class="container mt-1 mb-4">
+
+<div class="container">
+  {% for post in posts %}
+    <div class="row border meupost mt-4 p-3">
+
+      <div class="col col-2 border-end pe-3">
+        <div class="image pe-2"> <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil) ) }}" class="rounded" width="150" > </div>
+        <strong> {{ post.autor.username }} </strong>
+
+        <div class= "row">
+              {% for curso in post.autor.cursos.split(';') %}
+                  <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>
+              {% endfor %}
+      </div>
+
+      </div>
+
+      <div class="col col-9">
+        <a style='text-decoration: none; color: black' href="{{ url_for('exibir_post', post_id= post.id) }}"> 
+          <h3>{{ post.titulo }} <small class="text-muted" style="font-size: 12px"> {{ post.data_criacao.strftime('%d/%m/%Y - %H:%M') }} </small></h3>
+          <p> {{post.corpo }}</p>
+        </a>
+      </div>
+
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
